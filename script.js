@@ -1001,13 +1001,13 @@ function startRhythmGame() {
         }
         spawnRhythmNote();
         notesSpawned++;
-    }, 600 + Math.random() * 400);
+    }, 800);
 
     rhythmAnimFrame = requestAnimationFrame(updateRhythm);
 
     rhythmGameTimer = setTimeout(() => {
         endRhythmGame();
-    }, 25000);
+    }, 35000);
 }
 
 function spawnRhythmNote() {
@@ -1031,11 +1031,11 @@ function updateRhythm() {
 
     rhythmNotes.forEach(note => {
         if (note.hit) return;
-        note.y += 3;
+        note.y += 2; // Slower speed for easier gameplay
         note.el.style.top = `${note.y}px`;
 
-        // Missed
-        if (note.y > 360) {
+        // Missed - more generous threshold
+        if (note.y > 400) {
             note.hit = true;
             note.el.style.opacity = '0.2';
             rhythmCombo = 0;
@@ -1067,34 +1067,34 @@ function endRhythmGame() {
     }
 }
 
-document.addEventListener('keydown', (e) => {
+// Shared hit-check logic for both keyboard and touch/click
+function handleRhythmHit(key) {
     if (!rhythmActive) return;
-    if (!rhythmKeys.includes(e.key)) return;
-    e.preventDefault();
 
-    const lane = document.querySelector(`.rhythm-lane[data-key="${e.key}"]`);
-    const hitY = rhythmLanePositions[e.key]?.hitY || 250;
+    const lane = document.querySelector(`.rhythm-lane[data-key="${key}"]`);
+    const hitY = rhythmLanePositions[key]?.hitY || 250;
 
     // Find closest unhit note for this key
     let closest = null;
     let closestDist = Infinity;
 
     rhythmNotes.forEach(note => {
-        if (note.hit || note.key !== e.key) return;
+        if (note.hit || note.key !== key) return;
         const dist = Math.abs(note.y - hitY);
         if (dist < closestDist) { closestDist = dist; closest = note; }
     });
 
     const feedback = document.getElementById('rhythm-feedback');
 
-    if (closest && closestDist < 50) {
+    // Much more generous tolerance: 90px
+    if (closest && closestDist < 90) {
         closest.hit = true;
         closest.el.remove();
 
         let points = 0;
         let text = '';
-        if (closestDist < 15) { points = 100; text = '¡¡PERFECTO!! ✨'; feedback.style.color = '#FFD700'; }
-        else if (closestDist < 30) { points = 50; text = '¡Genial! 🎵'; feedback.style.color = '#4CAF50'; }
+        if (closestDist < 25) { points = 100; text = '¡¡PERFECTO!! ✨'; feedback.style.color = '#FFD700'; }
+        else if (closestDist < 50) { points = 50; text = '¡Genial! 🎵'; feedback.style.color = '#4CAF50'; }
         else { points = 25; text = '¡Bien! 👍'; feedback.style.color = '#4FC3F7'; }
 
         rhythmCombo++;
@@ -1105,8 +1105,10 @@ document.addEventListener('keydown', (e) => {
         document.getElementById('rhythm-combo').textContent = rhythmCombo;
         feedback.textContent = `${text} +${points}`;
 
-        lane.classList.add('hit');
-        setTimeout(() => lane.classList.remove('hit'), 200);
+        if (lane) {
+            lane.classList.add('hit');
+            setTimeout(() => lane.classList.remove('hit'), 200);
+        }
 
         playTone(400 + rhythmCombo * 20, 0.15, 'sine', 0.2);
     } else {
@@ -1115,9 +1117,24 @@ document.addEventListener('keydown', (e) => {
         feedback.textContent = '¡Fallo! 💨';
         feedback.style.color = '#FF6B6B';
 
-        lane.classList.add('miss');
-        setTimeout(() => lane.classList.remove('miss'), 200);
+        if (lane) {
+            lane.classList.add('miss');
+            setTimeout(() => lane.classList.remove('miss'), 200);
+        }
     }
+}
+
+// Tap/click handler for mobile and desktop
+function rhythmTap(key) {
+    handleRhythmHit(key);
+}
+
+// Keyboard handler
+document.addEventListener('keydown', (e) => {
+    if (!rhythmActive) return;
+    if (!rhythmKeys.includes(e.key)) return;
+    e.preventDefault();
+    handleRhythmHit(e.key);
 });
 
 // ============================================

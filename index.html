@@ -275,7 +275,7 @@
                 <!-- Rhythm Game -->
                 <div class="content-block game-block rhythm-block">
                     <h2>🎶 ¡Juego de Ritmo!</h2>
-                    <p class="game-instructions">Pulsa las flechas del teclado cuando lleguen a la línea. ¡Sigue el ritmo!</p>
+                    <p class="game-instructions">¡Toca las flechas de abajo (o usa el teclado) cuando las notas lleguen a la línea!</p>
                     <div class="game-stats">
                         <span>Puntos: <span id="rhythm-score">0</span></span>
                         <span>Combo: <span id="rhythm-combo">0</span></span>
@@ -283,10 +283,10 @@
                     </div>
                     <div class="rhythm-game-area" id="rhythm-area">
                         <div class="rhythm-lanes">
-                            <div class="rhythm-lane" data-key="ArrowLeft">←</div>
-                            <div class="rhythm-lane" data-key="ArrowUp">↑</div>
-                            <div class="rhythm-lane" data-key="ArrowDown">↓</div>
-                            <div class="rhythm-lane" data-key="ArrowRight">→</div>
+                            <button class="rhythm-lane" data-key="ArrowLeft" onclick="rhythmTap('ArrowLeft')" type="button">←</button>
+                            <button class="rhythm-lane" data-key="ArrowUp" onclick="rhythmTap('ArrowUp')" type="button">↑</button>
+                            <button class="rhythm-lane" data-key="ArrowDown" onclick="rhythmTap('ArrowDown')" type="button">↓</button>
+                            <button class="rhythm-lane" data-key="ArrowRight" onclick="rhythmTap('ArrowRight')" type="button">→</button>
                         </div>
                         <div class="rhythm-hit-line"></div>
                         <div class="rhythm-notes-container" id="rhythm-notes"></div>
