@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡La Mejor Página Web del Mundo!</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bubblegum+Sans&family=Fredoka+One&family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav id="main-nav">
+        <a href="#home" class="nav-link active" data-section="home">🏠</a>
+        <a href="#marcos" class="nav-link" data-section="marcos">⚽</a>
+        <a href="#claudia" class="nav-link" data-section="claudia">💃</a>
+        <a href="#alvaro" class="nav-link" data-section="alvaro">👶</a>
+    </nav>
+
+    <!-- HOME SECTION -->
+    <section id="home" class="section section-home">
+        <div class="floating-elements" id="home-floats"></div>
+        <div class="section-content">
+            <h1 class="main-title">
+                <span class="title-line">¡La Mejor</span>
+                <span class="title-line title-highlight">Página Web</span>
+                <span class="title-line">del Mundo!</span>
+            </h1>
+            <p class="subtitle">Hecha con mucho cariño para los mejores sobrinos del universo</p>
+            <div class="kid-cards">
+                <a href="#marcos" class="kid-card card-marcos">
+                    <div class="card-emoji">⚽🐉</div>
+                    <h2>Marcos</h2>
+                    <p>Zona de Guerreros y Campeones</p>
+                    <span class="card-age">12 años</span>
+                </a>
+                <a href="#claudia" class="kid-card card-claudia">
+                    <div class="card-emoji">💃🎵</div>
+                    <h2>Claudia</h2>
+                    <p>Zona de Baile y Música</p>
+                    <span class="card-age">10 años</span>
+                </a>
+                <a href="#alvaro" class="kid-card card-alvaro">
+                    <div class="card-emoji">🧸⭐</div>
+                    <h2>Álvaro</h2>
+                    <p>Zona del Bebé Más Guapo</p>
+                    <span class="card-age">2 añitos</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARCOS SECTION -->
+    <section id="marcos" class="section section-marcos">
+        <div class="floating-elements" id="marcos-floats"></div>
+        <div class="section-content">
+            <div class="section-header">
+                <h1 class="section-title marcos-title">⚡ La Zona de Marcos ⚡</h1>
+                <p class="section-subtitle">¡Donde los guerreros entrenan y los campeones juegan!</p>
+            </div>
+
+            <div class="content-grid">
+                <!-- Dragon Ball Area -->
+                <div class="content-block db-block">
+                    <h2>🐉 Dragon Ball Zone 🐉</h2>
+                    <div class="power-level-widget">
+                        <p class="power-label">Tu nivel de poder:</p>
+                        <div class="power-bar-container">
+                            <div class="power-bar" id="power-bar">
+                                <span id="power-value">0</span>
+                            </div>
+                        </div>
+                        <button class="btn btn-db" id="power-btn" onclick="increasePower()">
+                            ¡¡¡AAAAHHH!!! 💥
+                        </button>
+                        <p class="power-rank" id="power-rank">Humano normal</p>
+                    </div>
+
+                    <div class="db-facts">
+                        <h3>¿Sabías que...?</h3>
+                        <div class="fact-carousel" id="db-facts">
+                            <p class="fact active">Goku ha muerto 2 veces en toda la serie de Dragon Ball.</p>
+                            <p class="fact">El nombre Vegeta viene de "vegetable" (verdura en inglés).</p>
+                            <p class="fact">Akira Toriyama creó Dragon Ball en 1984.</p>
+                            <p class="fact">Goku come más de 50 platos en una sola comida.</p>
+                            <p class="fact">El Kamehameha está inspirado en el rey hawaiano Kamehameha I.</p>
+                            <p class="fact">Krilin es el humano más fuerte de todo Dragon Ball.</p>
+                        </div>
+                        <button class="btn btn-sm" onclick="nextFact()">Siguiente dato →</button>
+                    </div>
+                </div>
+
+                <!-- Soccer Area -->
+                <div class="content-block soccer-block">
+                    <h2>⚽ Fútbol Zone ⚽</h2>
+
+                    <div class="soccer-quiz">
+                        <h3>🏆 Quiz de Fútbol</h3>
+                        <div id="quiz-container">
+                            <p class="quiz-question" id="quiz-question"></p>
+                            <div class="quiz-options" id="quiz-options"></div>
+                            <p class="quiz-score">Puntuación: <span id="quiz-score">0</span>/<span id="quiz-total">0</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mini Game: Dragon Ball Collector -->
+                <div class="content-block game-block">
+                    <h2>🎮 ¡Atrapa las Esferas del Dragón!</h2>
+                    <p class="game-instructions">Haz clic en las esferas antes de que desaparezcan. ¡Consigue las 7!</p>
+                    <div class="game-stats">
+                        <span>Esferas: <span id="db-collected">0</span>/7</span>
+                        <span>Tiempo: <span id="db-timer">30</span>s</span>
+                    </div>
+                    <div class="game-area" id="db-game-area">
+                        <button class="btn btn-db btn-start-game" id="db-start" onclick="startDragonBallGame()">¡Empezar!</button>
+                    </div>
+                    <div class="game-message" id="db-message"></div>
+                </div>
+            </div>
+            <a href="#home" class="back-home">← Volver al inicio</a>
+        </div>
+    </section>
+
+    <!-- CLAUDIA SECTION -->
+    <section id="claudia" class="section section-claudia">
+        <div class="floating-elements" id="claudia-floats"></div>
+        <div class="section-content">
+            <div class="section-header">
+                <h1 class="section-title claudia-title">✨ La Zona de Claudia ✨</h1>
+                <p class="section-subtitle">¡Donde la música suena y el baile nunca para!</p>
+            </div>
+
+            <div class="content-grid">
+                <!-- Dance section -->
+                <div class="content-block dance-block">
+                    <h2>💃 Rincón del Baile 💃</h2>
+                    <div class="dance-floor" id="dance-floor">
+                        <div class="dancer" id="dancer">💃</div>
+                        <div class="dance-tiles" id="dance-tiles"></div>
+                    </div>
+                    <div class="dance-facts">
+                        <h3>¿Sabías que...?</h3>
+                        <div class="fact-carousel" id="dance-facts">
+                            <p class="fact active">El flamenco fue declarado Patrimonio de la Humanidad por la UNESCO.</p>
+                            <p class="fact">El moonwalk de Michael Jackson se hizo famoso en 1983.</p>
+                            <p class="fact">La salsa nació en Nueva York con influencias cubanas y puertorriqueñas.</p>
+                            <p class="fact">El ballet empezó en Italia en el siglo XV.</p>
+                            <p class="fact">Bailar 30 minutos quema más de 200 calorías.</p>
+                        </div>
+                        <button class="btn btn-sm btn-claudia" onclick="nextDanceFact()">Siguiente dato →</button>
+                    </div>
+                </div>
+
+                <!-- Music section -->
+                <div class="content-block music-block">
+                    <h2>🎵 Rincón de la Música 🎵</h2>
+                    <div class="piano-container">
+                        <h3>🎹 Mini Piano</h3>
+                        <div class="piano" id="piano">
+                            <div class="piano-key white" data-note="C" onclick="playNote('C')">Do</div>
+                            <div class="piano-key black" data-note="Cs" onclick="playNote('Cs')"></div>
+                            <div class="piano-key white" data-note="D" onclick="playNote('D')">Re</div>
+                            <div class="piano-key black" data-note="Ds" onclick="playNote('Ds')"></div>
+                            <div class="piano-key white" data-note="E" onclick="playNote('E')">Mi</div>
+                            <div class="piano-key white" data-note="F" onclick="playNote('F')">Fa</div>
+                            <div class="piano-key black" data-note="Fs" onclick="playNote('Fs')"></div>
+                            <div class="piano-key white" data-note="G" onclick="playNote('G')">Sol</div>
+                            <div class="piano-key black" data-note="Gs" onclick="playNote('Gs')"></div>
+                            <div class="piano-key white" data-note="A" onclick="playNote('A')">La</div>
+                            <div class="piano-key black" data-note="As" onclick="playNote('As')"></div>
+                            <div class="piano-key white" data-note="B" onclick="playNote('B')">Si</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mini Game: Simon Says Musical -->
+                <div class="content-block game-block">
+                    <h2>🎮 ¡Simón Musical!</h2>
+                    <p class="game-instructions">Escucha la secuencia y repítela. ¡Cada ronda se añade una nota más!</p>
+                    <div class="game-stats">
+                        <span>Ronda: <span id="simon-round">0</span></span>
+                        <span>Récord: <span id="simon-record">0</span></span>
+                    </div>
+                    <div class="simon-game">
+                        <div class="simon-grid">
+                            <button class="simon-btn" id="simon-0" data-index="0" onclick="simonInput(0)">🎵</button>
+                            <button class="simon-btn" id="simon-1" data-index="1" onclick="simonInput(1)">🎶</button>
+                            <button class="simon-btn" id="simon-2" data-index="2" onclick="simonInput(2)">🎵</button>
+                            <button class="simon-btn" id="simon-3" data-index="3" onclick="simonInput(3)">🎶</button>
+                        </div>
+                        <button class="btn btn-claudia btn-start-game" id="simon-start" onclick="startSimon()">¡Empezar!</button>
+                    </div>
+                    <div class="game-message" id="simon-message"></div>
+                </div>
+            </div>
+            <a href="#home" class="back-home">← Volver al inicio</a>
+        </div>
+    </section>
+
+    <!-- ALVARO SECTION -->
+    <section id="alvaro" class="section section-alvaro">
+        <div class="floating-elements" id="alvaro-floats"></div>
+        <div class="section-content">
+            <div class="section-header">
+                <h1 class="section-title alvaro-title">🌟 La Zona de Álvaro 🌟</h1>
+                <p class="section-subtitle">¡El rinconcito más bonito del mundo!</p>
+            </div>
+
+            <div class="content-grid alvaro-grid">
+                <!-- Bubble Pop Game -->
+                <div class="content-block baby-block">
+                    <h2>🫧 ¡Explota las Burbujas!</h2>
+                    <div class="bubble-game" id="bubble-game">
+                        <div class="bubbles-container" id="bubbles-container"></div>
+                        <div class="bubble-score">
+                            <span class="bubble-score-text">⭐ <span id="bubble-count">0</span> ⭐</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animal Sounds -->
+                <div class="content-block baby-block">
+                    <h2>🐾 ¡Los Animales!</h2>
+                    <div class="animal-grid">
+                        <button class="animal-btn" onclick="animalSound('🐶', 'Guau guau')">
+                            <span class="animal-emoji">🐶</span>
+                            <span class="animal-name">Perrito</span>
+                        </button>
+                        <button class="animal-btn" onclick="animalSound('🐱', 'Miau miau')">
+                            <span class="animal-emoji">🐱</span>
+                            <span class="animal-name">Gatito</span>
+                        </button>
+                        <button class="animal-btn" onclick="animalSound('🐮', 'Muuuu')">
+                            <span class="animal-emoji">🐮</span>
+                            <span class="animal-name">Vaquita</span>
+                        </button>
+                        <button class="animal-btn" onclick="animalSound('🐷', 'Oink oink')">
+                            <span class="animal-emoji">🐷</span>
+                            <span class="animal-name">Cerdito</span>
+                        </button>
+                        <button class="animal-btn" onclick="animalSound('🐸', 'Croac croac')">
+                            <span class="animal-emoji">🐸</span>
+                            <span class="animal-name">Ranita</span>
+                        </button>
+                        <button class="animal-btn" onclick="animalSound('🦁', 'Grrrr')">
+                            <span class="animal-emoji">🦁</span>
+                            <span class="animal-name">León</span>
+                        </button>
+                        <button class="animal-btn" onclick="animalSound('🐔', 'Quiquiriquí')">
+                            <span class="animal-emoji">🐔</span>
+                            <span class="animal-name">Gallina</span>
+                        </button>
+                        <button class="animal-btn" onclick="animalSound('🦆', 'Cuac cuac')">
+                            <span class="animal-emoji">🦆</span>
+                            <span class="animal-name">Patito</span>
+                        </button>
+                    </div>
+                    <div class="animal-display" id="animal-display"></div>
+                </div>
+
+                <!-- Colors & Shapes -->
+                <div class="content-block baby-block">
+                    <h2>🎨 ¡Colores y Formas!</h2>
+                    <div class="shapes-game" id="shapes-game">
+                        <div class="shape-display" id="shape-display">
+                            <span>¡Toca una forma!</span>
+                        </div>
+                        <div class="shapes-grid">
+                            <button class="shape-btn" style="background: #FF6B6B;" onclick="showShape('Círculo', '#FF6B6B', '●', 'Rojo')">
+                                <span class="shape-icon">●</span>
+                            </button>
+                            <button class="shape-btn" style="background: #4ECDC4;" onclick="showShape('Cuadrado', '#4ECDC4', '■', 'Verde')">
+                                <span class="shape-icon">■</span>
+                            </button>
+                            <button class="shape-btn" style="background: #FFE66D;" onclick="showShape('Triángulo', '#FFE66D', '▲', 'Amarillo')">
+                                <span class="shape-icon">▲</span>
+                            </button>
+                            <button class="shape-btn" style="background: #A78BFA;" onclick="showShape('Estrella', '#A78BFA', '★', 'Morado')">
+                                <span class="shape-icon">★</span>
+                            </button>
+                            <button class="shape-btn" style="background: #F97316;" onclick="showShape('Corazón', '#F97316', '♥', 'Naranja')">
+                                <span class="shape-icon">♥</span>
+                            </button>
+                            <button class="shape-btn" style="background: #60A5FA;" onclick="showShape('Diamante', '#60A5FA', '◆', 'Azul')">
+                                <span class="shape-icon">◆</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#home" class="back-home back-home-baby">← Volver al inicio</a>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>
