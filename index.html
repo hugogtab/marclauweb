@@ -4,22 +4,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>¡La Mejor Página Web del Mundo!</title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⭐</text></svg>">
     <link rel="stylesheet" href="styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Bubblegum+Sans&family=Fredoka+One&family=Poppins:wght@400;600;700;900&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- LOADING SCREEN -->
+    <div id="loading-screen">
+        <div class="loader-content">
+            <div class="loader-emoji">⭐</div>
+            <h1 class="loader-title">Cargando la mejor página...</h1>
+            <div class="loader-bar-track">
+                <div class="loader-bar-fill" id="loader-bar"></div>
+            </div>
+            <p class="loader-sub">¡Preparando cosas increíbles!</p>
+        </div>
+    </div>
+
+    <!-- KONAMI EASTER EGG OVERLAY -->
+    <div id="konami-overlay" class="hidden">
+        <div class="konami-content">
+            <h1>🐉 ¡HAS ENCONTRADO EL SECRETO! 🐉</h1>
+            <p>¡Has activado el código Konami!</p>
+            <p class="konami-code">↑ ↑ ↓ ↓ ← → ← → B A</p>
+            <div class="konami-rain" id="konami-rain"></div>
+            <button class="btn btn-db" onclick="closeKonami()">¡Genial!</button>
+        </div>
+    </div>
+
+    <!-- CONFETTI CANVAS -->
+    <canvas id="confetti-canvas"></canvas>
+
     <!-- Navigation -->
     <nav id="main-nav">
         <a href="#home" class="nav-link active" data-section="home">🏠</a>
         <a href="#marcos" class="nav-link" data-section="marcos">⚽</a>
         <a href="#claudia" class="nav-link" data-section="claudia">💃</a>
         <a href="#alvaro" class="nav-link" data-section="alvaro">👶</a>
+        <a href="#secret" class="nav-link" data-section="secret">💌</a>
     </nav>
+
+    <!-- Dark Mode Toggle -->
+    <button id="dark-mode-toggle" onclick="toggleDarkMode()" title="Modo oscuro / claro">🟠</button>
 
     <!-- HOME SECTION -->
     <section id="home" class="section section-home">
+        <canvas id="starfield" class="starfield-canvas"></canvas>
         <div class="floating-elements" id="home-floats"></div>
         <div class="section-content">
             <h1 class="main-title">
@@ -32,13 +64,13 @@
                 <a href="#marcos" class="kid-card card-marcos">
                     <div class="card-emoji">⚽🐉</div>
                     <h2>Marcos</h2>
-                    <p>Zona de Guerreros y Campeones</p>
+                    <p>Zona de Guerreros y Madridistas</p>
                     <span class="card-age">12 años</span>
                 </a>
                 <a href="#claudia" class="kid-card card-claudia">
                     <div class="card-emoji">💃🎵</div>
                     <h2>Claudia</h2>
-                    <p>Zona de Baile y Música</p>
+                    <p>Zona de K-pop, Baile y Cazademonios</p>
                     <span class="card-age">10 años</span>
                 </a>
                 <a href="#alvaro" class="kid-card card-alvaro">
@@ -56,8 +88,10 @@
         <div class="floating-elements" id="marcos-floats"></div>
         <div class="section-content">
             <div class="section-header">
-                <h1 class="section-title marcos-title">⚡ La Zona de Marcos ⚡</h1>
-                <p class="section-subtitle">¡Donde los guerreros entrenan y los campeones juegan!</p>
+                <h1 class="section-title marcos-title">
+                    <span class="saiyan-aura" id="saiyan-aura">⚡ La Zona de Marcos ⚡</span>
+                </h1>
+                <p class="section-subtitle">¡Donde los guerreros entrenan y el Madrid siempre gana! ¡Hala Madrid!</p>
             </div>
 
             <div class="content-grid">
@@ -86,6 +120,8 @@
                             <p class="fact">Goku come más de 50 platos en una sola comida.</p>
                             <p class="fact">El Kamehameha está inspirado en el rey hawaiano Kamehameha I.</p>
                             <p class="fact">Krilin es el humano más fuerte de todo Dragon Ball.</p>
+                            <p class="fact">Vegeta nunca ha ganado una pelea importante en toda la serie.</p>
+                            <p class="fact">Mr. Satán/Hercule es el campeón mundial de artes marciales del mundo humano.</p>
                         </div>
                         <button class="btn btn-sm" onclick="nextFact()">Siguiente dato →</button>
                     </div>
@@ -94,13 +130,13 @@
                 <!-- Soccer Area -->
                 <div class="content-block soccer-block">
                     <h2>⚽ Fútbol Zone ⚽</h2>
-
                     <div class="soccer-quiz">
                         <h3>🏆 Quiz de Fútbol</h3>
                         <div id="quiz-container">
                             <p class="quiz-question" id="quiz-question"></p>
                             <div class="quiz-options" id="quiz-options"></div>
                             <p class="quiz-score">Puntuación: <span id="quiz-score">0</span>/<span id="quiz-total">0</span></p>
+                            <p class="quiz-record">Récord: <span id="quiz-record-display">0</span></p>
                         </div>
                     </div>
                 </div>
@@ -112,11 +148,41 @@
                     <div class="game-stats">
                         <span>Esferas: <span id="db-collected">0</span>/7</span>
                         <span>Tiempo: <span id="db-timer">30</span>s</span>
+                        <span>Mejor: <span id="db-best">--</span>s</span>
                     </div>
                     <div class="game-area" id="db-game-area">
                         <button class="btn btn-db btn-start-game" id="db-start" onclick="startDragonBallGame()">¡Empezar!</button>
                     </div>
                     <div class="game-message" id="db-message"></div>
+                </div>
+
+                <!-- Penalty Shootout Game -->
+                <div class="content-block game-block penalty-block">
+                    <h2>⚽ ¡Penaltis!</h2>
+                    <p class="game-instructions">¡Haz clic donde quieras tirar el penalti! El portero intentará pararlo.</p>
+                    <div class="game-stats">
+                        <span>Goles: <span id="penalty-goals">0</span></span>
+                        <span>Tiros: <span id="penalty-shots">0</span></span>
+                        <span>Récord: <span id="penalty-record">0</span></span>
+                    </div>
+                    <div class="penalty-area" id="penalty-area">
+                        <canvas id="penalty-canvas" width="400" height="300"></canvas>
+                    </div>
+                    <div class="game-message" id="penalty-message"></div>
+                </div>
+
+                <!-- DB Character Quiz -->
+                <div class="content-block db-block">
+                    <h2>🐉 ¿Quién es este personaje?</h2>
+                    <div class="db-char-quiz">
+                        <div class="db-char-clue" id="db-char-clue"></div>
+                        <div class="db-char-options" id="db-char-options"></div>
+                        <div class="game-stats">
+                            <span>Aciertos: <span id="db-char-score">0</span></span>
+                            <span>Récord: <span id="db-char-record">0</span></span>
+                        </div>
+                        <div class="game-message" id="db-char-message"></div>
+                    </div>
                 </div>
             </div>
             <a href="#home" class="back-home">← Volver al inicio</a>
@@ -126,10 +192,17 @@
     <!-- CLAUDIA SECTION -->
     <section id="claudia" class="section section-claudia">
         <div class="floating-elements" id="claudia-floats"></div>
+        <!-- Disco Ball -->
+        <div class="disco-ball-container">
+            <div class="disco-ball" id="disco-ball">
+                <div class="disco-shine"></div>
+            </div>
+            <div class="disco-rays" id="disco-rays"></div>
+        </div>
         <div class="section-content">
             <div class="section-header">
                 <h1 class="section-title claudia-title">✨ La Zona de Claudia ✨</h1>
-                <p class="section-subtitle">¡Donde la música suena y el baile nunca para!</p>
+                <p class="section-subtitle">¡K-pop, baile, cazademonios y la música nunca para!</p>
             </div>
 
             <div class="content-grid">
@@ -143,10 +216,14 @@
                     <div class="dance-facts">
                         <h3>¿Sabías que...?</h3>
                         <div class="fact-carousel" id="dance-facts">
-                            <p class="fact active">El flamenco fue declarado Patrimonio de la Humanidad por la UNESCO.</p>
-                            <p class="fact">El moonwalk de Michael Jackson se hizo famoso en 1983.</p>
-                            <p class="fact">La salsa nació en Nueva York con influencias cubanas y puertorriqueñas.</p>
-                            <p class="fact">El ballet empezó en Italia en el siglo XV.</p>
+                            <p class="fact active">BTS fue el primer grupo de K-pop en llegar al #1 en Billboard Hot 100.</p>
+                            <p class="fact">BLACKPINK tiene el récord del vídeo musical más visto en 24 horas de un grupo de K-pop.</p>
+                            <p class="fact">El K-pop nació en Corea del Sur en los años 90.</p>
+                            <p class="fact">Los idols de K-pop entrenan durante años antes de debutar.</p>
+                            <p class="fact">Tanjiro de Demon Slayer usa la Respiración del Agua con 10 formas diferentes.</p>
+                            <p class="fact">Nezuko es el único demonio que no necesita comer humanos para sobrevivir.</p>
+                            <p class="fact">Demon Slayer: Mugen Train fue la película más taquillera de Japón en 2020.</p>
+                            <p class="fact">El flamenco fue declarado Patrimonio de la Humanidad por la UNESCO.</p>
                             <p class="fact">Bailar 30 minutos quema más de 200 calorías.</p>
                         </div>
                         <button class="btn btn-sm btn-claudia" onclick="nextDanceFact()">Siguiente dato →</button>
@@ -175,7 +252,7 @@
                     </div>
                 </div>
 
-                <!-- Mini Game: Simon Says Musical -->
+                <!-- Simon Says Musical -->
                 <div class="content-block game-block">
                     <h2>🎮 ¡Simón Musical!</h2>
                     <p class="game-instructions">Escucha la secuencia y repítela. ¡Cada ronda se añade una nota más!</p>
@@ -194,6 +271,48 @@
                     </div>
                     <div class="game-message" id="simon-message"></div>
                 </div>
+
+                <!-- Rhythm Game -->
+                <div class="content-block game-block rhythm-block">
+                    <h2>🎶 ¡Juego de Ritmo!</h2>
+                    <p class="game-instructions">Pulsa las flechas del teclado cuando lleguen a la línea. ¡Sigue el ritmo!</p>
+                    <div class="game-stats">
+                        <span>Puntos: <span id="rhythm-score">0</span></span>
+                        <span>Combo: <span id="rhythm-combo">0</span></span>
+                        <span>Récord: <span id="rhythm-record">0</span></span>
+                    </div>
+                    <div class="rhythm-game-area" id="rhythm-area">
+                        <div class="rhythm-lanes">
+                            <div class="rhythm-lane" data-key="ArrowLeft">←</div>
+                            <div class="rhythm-lane" data-key="ArrowUp">↑</div>
+                            <div class="rhythm-lane" data-key="ArrowDown">↓</div>
+                            <div class="rhythm-lane" data-key="ArrowRight">→</div>
+                        </div>
+                        <div class="rhythm-hit-line"></div>
+                        <div class="rhythm-notes-container" id="rhythm-notes"></div>
+                        <button class="btn btn-claudia btn-start-game" id="rhythm-start" onclick="startRhythmGame()">¡Empezar!</button>
+                    </div>
+                    <div class="rhythm-feedback" id="rhythm-feedback"></div>
+                    <div class="game-message" id="rhythm-message"></div>
+                </div>
+
+                <!-- Karaoke -->
+                <div class="content-block music-block karaoke-block">
+                    <h2>🎤 ¡Karaoke!</h2>
+                    <div class="karaoke-area">
+                        <div class="karaoke-select">
+                            <button class="btn btn-claudia btn-sm" onclick="loadKaraoke(0)">Cumpleaños Feliz</button>
+                            <button class="btn btn-claudia btn-sm" onclick="loadKaraoke(1)">Estrellita</button>
+                            <button class="btn btn-claudia btn-sm" onclick="loadKaraoke(2)">Sol Solecito</button>
+                        </div>
+                        <div class="karaoke-display" id="karaoke-display">
+                            <p class="karaoke-placeholder">¡Elige una canción! 🎵</p>
+                        </div>
+                        <div class="karaoke-controls">
+                            <button class="btn btn-claudia" id="karaoke-play" onclick="playKaraoke()" disabled>▶ Cantar</button>
+                        </div>
+                    </div>
+                </div>
             </div>
             <a href="#home" class="back-home">← Volver al inicio</a>
         </div>
@@ -202,8 +321,13 @@
     <!-- ALVARO SECTION -->
     <section id="alvaro" class="section section-alvaro">
         <div class="floating-elements" id="alvaro-floats"></div>
+        <!-- Floating Clouds -->
+        <div class="clouds-container" id="clouds-container"></div>
         <div class="section-content">
             <div class="section-header">
+                <div class="day-night-toggle">
+                    <button class="btn-day-night" id="day-night-btn" onclick="toggleDayNight()">🌙</button>
+                </div>
                 <h1 class="section-title alvaro-title">🌟 La Zona de Álvaro 🌟</h1>
                 <p class="section-subtitle">¡El rinconcito más bonito del mundo!</p>
             </div>
@@ -289,8 +413,72 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- Counting Game -->
+                <div class="content-block baby-block">
+                    <h2>🔢 ¡Cuenta las Estrellas!</h2>
+                    <div class="counting-game">
+                        <div class="counting-display" id="counting-display"></div>
+                        <p class="counting-question" id="counting-question">¡Toca para empezar!</p>
+                        <div class="counting-buttons" id="counting-buttons"></div>
+                        <div class="game-message" id="counting-message"></div>
+                        <button class="btn btn-baby" id="counting-start" onclick="startCounting()">¡Jugar!</button>
+                    </div>
+                </div>
+
+                <!-- Drawing Canvas -->
+                <div class="content-block baby-block">
+                    <h2>🖌️ ¡Pinta y Dibuja!</h2>
+                    <div class="drawing-area">
+                        <div class="drawing-colors" id="drawing-colors">
+                            <button class="color-btn active" style="background:#FF6B6B" onclick="setDrawColor('#FF6B6B', this)"></button>
+                            <button class="color-btn" style="background:#4ECDC4" onclick="setDrawColor('#4ECDC4', this)"></button>
+                            <button class="color-btn" style="background:#FFE66D" onclick="setDrawColor('#FFE66D', this)"></button>
+                            <button class="color-btn" style="background:#A78BFA" onclick="setDrawColor('#A78BFA', this)"></button>
+                            <button class="color-btn" style="background:#F97316" onclick="setDrawColor('#F97316', this)"></button>
+                            <button class="color-btn" style="background:#60A5FA" onclick="setDrawColor('#60A5FA', this)"></button>
+                            <button class="color-btn" style="background:#34D399" onclick="setDrawColor('#34D399', this)"></button>
+                            <button class="color-btn" style="background:#F472B6" onclick="setDrawColor('#F472B6', this)"></button>
+                        </div>
+                        <div class="drawing-sizes">
+                            <button class="size-btn active" onclick="setDrawSize(8, this)">●</button>
+                            <button class="size-btn" onclick="setDrawSize(16, this)">⬤</button>
+                            <button class="size-btn" onclick="setDrawSize(30, this)"><span style="font-size:1.5rem">⬤</span></button>
+                        </div>
+                        <canvas id="drawing-canvas" width="600" height="300"></canvas>
+                        <button class="btn btn-baby" onclick="clearDrawing()">🗑️ Borrar todo</button>
+                    </div>
+                </div>
             </div>
             <a href="#home" class="back-home back-home-baby">← Volver al inicio</a>
+        </div>
+    </section>
+
+    <!-- SECRET SECTION -->
+    <section id="secret" class="section section-secret">
+        <div class="floating-elements" id="secret-floats"></div>
+        <div class="section-content">
+            <div class="section-header">
+                <h1 class="section-title secret-title">💌 Un Mensaje Especial 💌</h1>
+            </div>
+            <div class="secret-message-box">
+                <div class="secret-letter">
+                    <p class="secret-greeting">Queridos Marcos, Claudia y Álvaro:</p>
+                    <p>Esta página web ha sido creada especialmente para vosotros porque sois los mejores sobrinos que alguien podría tener.</p>
+                    <p>Marcos, eres un campeón dentro y fuera del campo. Tu energía es más grande que la de Goku en Ultra Instinto.</p>
+                    <p>Claudia, tu alegría ilumina cualquier habitación. Cuando bailas, el mundo entero se pone a bailar contigo.</p>
+                    <p>Álvaro, eres el bebé más bonito y divertido del mundo mundial. Cada sonrisa tuya vale un millón.</p>
+                    <p>Os quiero muchísimo, ¡nunca lo olvidéis!</p>
+                    <p class="secret-sign">Con todo el cariño del mundo,<br><strong>Vuestro tío ❤️</strong></p>
+                </div>
+                <div class="secret-photos">
+                    <div class="photo-placeholder">
+                        <span>📸</span>
+                        <p>Aquí irán fotos de los tres</p>
+                    </div>
+                </div>
+            </div>
+            <a href="#home" class="back-home">← Volver al inicio</a>
         </div>
     </section>
 
